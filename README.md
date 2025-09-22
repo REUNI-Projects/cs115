@@ -50,4 +50,15 @@ Original Rules:
 
 **To Run:**
 
+In the terminal:
+1. cd into src/bin
+2. Enter `java run` to play yourself, 
+    1. `java run -t` to run tests
+    2. `java run -ai _ #` to let an ai try
+        - Replace _ with the bot (d: mine/default, g: gbt) 
+            (You need to add your own key for gbt)
+        - Replace # with the level (0-5)
+3. If you need to compile first, run `javac -encoding UTF-8 -d src/bin src/*.java` from root 
+    (same directory as the src folder)
+
 **Sample:**
