@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Screen {
     static DecimalFormat ooo_format = new DecimalFormat("000");
@@ -98,45 +99,33 @@ public class Screen {
     |                                                                |
     +----------------------------------------------------------------+
  */
-    public static final String in_game(int score, int level, int[] board, int[] dice, 
-        String[] options, String msg) {
+    public static final String in_game(GameBoard board, ArrayList<Dice> dice, Options options, 
+        String msg) {
 
         // Arg Validation
         if (msg == null) { msg = ""; }
 
-        int sum_score = 0;
-        for (int tile : board) { sum_score += tile; }
+        int score = board.get_score();
+        int level = board.get_level();
 
-        if (score < 0 || score != sum_score) { msg += S.Error.Err401.get_msg(); }
+        if (score < 0 ) { msg += S.Error.Err401.get_msg(); }
         if (level < 0 || level > 5) { msg += S.Error.Err402.get_msg(); }
-        if (board.length > 36) { msg += S.Error.Err403.get_msg(); }
-        if (dice.length > level + 1) { msg += S.Error.Err409.get_msg(); }  
-        if (options.length > 13) { msg += S.Error.Err405.get_msg(); } 
-        if (options.length < 1) { msg += S.Error.Err406.get_msg(); } 
+        if (dice.size() > level + 1) { msg += S.Error.Err409.get_msg(); }  
+        if (options.get_options().size() > 13) { msg += S.Error.Err405.get_msg(); } 
+        if (options.get_options().size() < 1) { msg += S.Error.Err406.get_msg(); } 
 
         // Additional Setup
         int sum_dice = 0;
-        for (int die : dice) { sum_dice += die; }
-
-        String[] tiles = {"", "", ""};
-        for (int i = 0; i < 36; i++) {
-            if (i < board.length) {
-                if (board[i] == 0) {
-                    tiles[i/12] += "██ ";
-                } else {
-                    tiles[i/12] += oo_format.format(board[i]) + " ";;
-                }
-            } else {
-                tiles[i/12] += "   ";
-            }
+        for (Dice die : dice) { 
+            if (die.get_face() > 0) { sum_dice += die.get_face();  }
         }
 
         String[] dice_face = new String[6];
         for (int i = 0; i < dice_face.length; i++) {
-            if (i < dice.length) {
-                dice_face[i] = dice[i] + "";
+            if (i < dice.size()) {
+                dice_face[i] = dice.get(i).get_face() + "";
                 // Additional Arg Validation
-                if (dice[i] < 1 || dice[i] > 6) { 
+                if (dice.get(i).get_face() < 1 || dice.get(i).get_face() > 6) { 
                     msg += S.Error.Err407.get_msg(); 
                 }
             } else if (i < level + 1) {
@@ -146,67 +135,28 @@ public class Screen {
             }
         }
 
-        String options_list = "" +
-            "|   [ ]                           [ ]                            |\n";
-        //   |   [01] 01 02 03 04 05 06 07 08  [02] 01 02 03 04 05 06 07 08   |
-        //   v    v    v    v    v    v    v    v    v    v    v    v    v    v
-        //   0    5    10   15   20   25   30   35   40   45   50   55   60   65
-
         // Screen
-        String screen = "" +              // ><
-            "+----------------------------------------------------------------+\n" + 
-            "|                                                                |\n";
-
-        screen += "" + 
-            "|    +--------------------<Score:" + ooo_format.format(score) + 
-            "|{-" + level + "-}>+     Dice:    " + oo_format.format(sum_dice) + "     |\n" + 
-            "|    | " + tiles[0] +                     "|     [" + dice_face[0] + "] [" + 
-                                            dice_face[1] + "] [" + dice_face[2] + "]     |\n" + 
-            "|    | " + tiles[1] +                     "|     [" + dice_face[3] + "] [" + 
-                                            dice_face[4] + "] [" + dice_face[5] + "]     |\n" + 
-            "|    | " + tiles[2] +                     "|                     |\n" + 
-            "|    +-------------------------------------+    [d-] Dice opt    |\n" +  
-            "|                                                                |\n";
+        String screen = screen_top + "|   " + board.get_board_str()[0] + "    + Dice:    "  + 
+            oo_format.format(sum_dice) + " +   |\n" + "|   " + board.get_board_str()[1] + 
+            "    | [" + dice_face[0] + "] [" + dice_face[1] + "] [" + dice_face[2] + "] |   |\n" + 
+            "|   " + board.get_board_str()[2] + "    | [" + dice_face[3] + "] [" + dice_face[4] + 
+            "] [" + dice_face[5] + "] |   |\n" + "|   " + board.get_board_str()[3] + 
+            "    |             |   |\n" + "|   " + board.get_board_str()[4] + 
+            "    | [r-] Roll # |   |\n" + screen_blank;
 
         for (int i = 0; i < 12; i += 2) {
-            // Additional Arg Validation
-            if ((i < options.length && options[i].length() >24) ||
-                (i + 1 < options.length && options[i + 1].length() >24)) {
-                msg += S.Error.Err408.get_msg();
-            }
-            
-            if (i + 1 < options.length) {
-                screen += options_list.substring(0, 6) + oo_format.format(i + 1) +
-                    options_list.substring(7, 9) + options[i] + 
-                    options_list.substring(10 + options[i].length(),34) + oo_format.format(i + 2) +
-                    options_list.substring(35, 37) + options[i + 1] +
-                    options_list.substring(38 + options[i + 1].length());
-            } else if (i < options.length) {
-                screen += options_list.substring(0, 6) + oo_format.format(i + 1) +
-                    options_list.substring(7, 9) + options[i] + 
-                    options_list.substring(10 + options[i].length(),33) + "    " +
-                    options_list.substring(37);
-            } else {
-                screen += options_list.substring(0, 5) + "    " +
-                    options_list.substring(9, 33) + "    " +
-                    options_list.substring(37);
-            }
+            screen += "|   " + options.get_option_string(i) + "  " + 
+                options.get_option_string(i+1) + "   |\n";
         }
 
-        screen += "" + 
-            "|                                                                |\n";
-
-        if (options.length > 12) {
+        screen += screen_blank;
+        if (options.get_options().size() > 12) {
             screen += "|    [x ~] Alt Ans                                   [e] Exit    |\n";
         } else {
             screen += "|                                                    [e] Exit    |\n";
         }
+        screen += screen_bottom + msg + "> ";
 
-        screen += "" +
-            "|                                                                |\n" + 
-            "+----------------------------------------------------------------+\n" +
-            msg +
-            "> ";
         return screen;
     }
 /*                                  ><
@@ -229,9 +179,13 @@ public class Screen {
     |                                                                |
     +----------------------------------------------------------------+
  */
-    public static final String end(int score, int turn, int level, String msg) {
+    public static final String end(GameBoard board, String msg) {
         // Arg Validation
         if (msg == null) { msg = ""; }
+
+        int score = board.get_score();
+        int level = board.get_level();
+        int turn = board.get_turn();
 
         if (score < 0) { msg += S.Error.Err401.get_msg(); }
         if (turn < 1) { msg += S.Error.Err410.get_msg(); }
@@ -279,7 +233,7 @@ public class Screen {
     |                                                                |
     +----------------------------------------------------------------+
  */
-    public static final String leader_board(String[] top, int page, String msg) {
+    public static final String leader_board(int page, String msg) {
         // Arg Validation
         if (msg == null) { msg = ""; }
 
@@ -288,25 +242,18 @@ public class Screen {
         // Screen
         String screen = screen_top + 
             "|                       >> Leader Board <<                       |\n" + 
-            "|          {-0-}    {-1-}    {-2-}    {-3-}    {-4-}    {-5-}    |\n" + 
-            "|   ";
+            "|          {-0-}    {-1-}    {-2-}    {-3-}    {-4-}    {-5-}    |\n";
 
-        for (int i = 0; i < 60; i++) { 
-            if (i < top.length) {
-                screen += top[i] + "  ";
-            } else {
-                screen += "--- ---  ";
-            }
-
-            if ((i+1) % 6 == 0) {
-                screen += "    |\n|      ";
-            }
+        for (int i = 0; i < 5; i++) { 
+            screen += LeaderBoard.get_rank(i + (page -1) * 5 + 1);
         }
 
-        screen += "" + 
-                   "                                                          |\n" + 
-            "|    [e] Exit                                                    |\n" +
-            screen_bottom + msg + "> ";
+        screen += screen_blank;
+        if (page == 1) { screen += screen_next; }
+        else if (page == 2) { screen += screen_back_next; }
+        else { screen += screen_back; }
+
+        screen += screen_bottom + msg + "> ";
         return screen;
     }
 /*                                  ><

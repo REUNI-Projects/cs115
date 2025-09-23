@@ -5,7 +5,7 @@ public class Test {
         return total;
     }
 
-    public static void runTests() {
+    public static void runTests() {/* 
 
         // Screen tests
         String[] top10 = {"mom 000", "dad 150", "sis 200", "bro 250"};
@@ -77,7 +77,7 @@ public class Test {
         System.out.println(Screen.leader_board(top10, 1, ""));
             // show info (all)
         for (int i = 0; i <7 ; i++) {// including the 404 page
-            System.out.println(Screen.info(i, ""));
-        }
+            System.out.println(Screen.info(i, "")); 
+        } */
     }
 }

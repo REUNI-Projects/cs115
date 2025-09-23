@@ -51,10 +51,9 @@ Original Rules:
 **To Run:**
 
 In the terminal:
-1. cd into src/bin
-2. Enter `java run` to play yourself, 
-    1. `java run -t` to run tests
-    2. `java run -ai _ #` to let an ai try
+1. `java -cp src/bin run` to play yourself, 
+    1. `java -cp src/bin run -t` to run tests
+    2. `java -cp src/bin run -ai _ #` to let an ai try
         - Replace _ with the bot (d: mine/default, g: gbt) 
             (You need to add your own key for gbt)
         - Replace # with the level (0-5)

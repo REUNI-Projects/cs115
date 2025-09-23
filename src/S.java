@@ -3,6 +3,7 @@ public class S {
         main_menu,
         level_menu,
         in_game,
+        in_game_alt,
         end_win,
         end_lose,
         leader_board_1,

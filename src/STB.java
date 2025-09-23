@@ -7,7 +7,7 @@ public class STB {
     }
 
     // Game Loop
-    public void run() {
+    public void start() {
         
     }
 
