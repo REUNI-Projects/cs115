@@ -1,5 +1,4 @@
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class Screen {
     static DecimalFormat ooo_format = new DecimalFormat("000");
@@ -99,7 +98,7 @@ public class Screen {
     |                                                                |
     +----------------------------------------------------------------+
  */
-    public static final String in_game(GameBoard board, ArrayList<Dice> dice, Options options, 
+    public static final String in_game(GameBoard board, Dice dice, Options options, 
         String msg) {
 
         // Arg Validation
@@ -110,39 +109,17 @@ public class Screen {
 
         if (score < 0 ) { msg += S.Error.Err401.get_msg(); }
         if (level < 0 || level > 5) { msg += S.Error.Err402.get_msg(); }
-        if (dice.size() > level + 1) { msg += S.Error.Err409.get_msg(); }  
+        if (dice.get_count() > level + 1) { msg += S.Error.Err409.get_msg(); }  
         if (options.get_options().size() > 13) { msg += S.Error.Err405.get_msg(); } 
         if (options.get_options().size() < 1) { msg += S.Error.Err406.get_msg(); } 
 
-        // Additional Setup
-        int sum_dice = 0;
-        for (Dice die : dice) { 
-            if (die.get_face() > 0) { sum_dice += die.get_face();  }
-        }
-
-        String[] dice_face = new String[6];
-        for (int i = 0; i < dice_face.length; i++) {
-            if (i < dice.size()) {
-                dice_face[i] = dice.get(i).get_face() + "";
-                // Additional Arg Validation
-                if (dice.get(i).get_face() < 1 || dice.get(i).get_face() > 6) { 
-                    msg += S.Error.Err407.get_msg(); 
-                }
-            } else if (i < level + 1) {
-                dice_face[i] = "X";
-            } else {
-                dice_face[i] = "_";
-            }
-        }
-
         // Screen
-        String screen = screen_top + "|   " + board.get_board_str()[0] + "    + Dice:    "  + 
-            oo_format.format(sum_dice) + " +   |\n" + "|   " + board.get_board_str()[1] + 
-            "    | [" + dice_face[0] + "] [" + dice_face[1] + "] [" + dice_face[2] + "] |   |\n" + 
-            "|   " + board.get_board_str()[2] + "    | [" + dice_face[3] + "] [" + dice_face[4] + 
-            "] [" + dice_face[5] + "] |   |\n" + "|   " + board.get_board_str()[3] + 
-            "    |             |   |\n" + "|   " + board.get_board_str()[4] + 
-            "    | [r-] Roll # |   |\n" + screen_blank;
+        String screen = screen_top + "|   " + board.get_board_str()[0] + "    " + 
+            dice.get_dice_str()[0] + "   |\n" + "|   " + board.get_board_str()[1] + 
+            "    " + dice.get_dice_str()[1] + "   |\n" + "|   " + board.get_board_str()[2] + 
+            "    " + dice.get_dice_str()[2] + "   |\n" + "|   " + board.get_board_str()[3] + 
+            "    " + dice.get_dice_str()[3] + "   |\n" + board.get_board_str()[4] + 
+            "    " + dice.get_dice_str()[4] + "   |\n" + screen_blank;
 
         for (int i = 0; i < 12; i += 2) {
             screen += "|   " + options.get_option_string(i) + "  " + 
