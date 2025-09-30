@@ -6,8 +6,10 @@ public class Options {
     // Attributes
     private ArrayList<ArrayList<Integer>> options;
 
+    // Constructor
     public Options() {}
 
+    // Generator
     public void generate_options(GameBoard board, Dice dice) {
         ArrayList<Integer> cur_board = IntStream.of(board.get_board()).filter(n -> n > 0).boxed()
             .collect(Collectors.toCollection(ArrayList::new));
@@ -31,6 +33,7 @@ public class Options {
         }
     }
 
+    // Accessors
     public ArrayList<ArrayList<Integer>> get_options() { return options; }
     public ArrayList<Integer> get_option(int i) { 
         if (i > 0 && i < options.size()) { 

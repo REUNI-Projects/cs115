@@ -1,9 +1,13 @@
 public class LeaderBoard {
     private static String[][] top15 = new String[6][15];
 
-    public static void load_leader_board() {}
+    public static void load_leader_board() { // File read
 
-    public static void update_leader_board() {}
+    }
+
+    public static void update_leader_board() { // File write
+
+    }
 
     public static String get_rank(int rank) {
         if (rank < 1 || rank > 15) { // Arg Validation

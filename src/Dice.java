@@ -8,6 +8,7 @@ public class Dice {
     private int dice_count = 1;
     private int level = 0;
 
+    // Constructors
     public Dice(int dice_count, S.Level level) { 
         set_dice_count(dice_count); 
         set_level(level.get_num());
@@ -15,12 +16,9 @@ public class Dice {
     }
     public Dice(int dice_count, int seed) { set_dice_count(dice_count); rng = new Random(seed); }
 
+    // 
     public void set_dice_count(int count) { dice_count = count; }
     private void set_level(int lv) { level = lv; }
-
-    public int get_sum() { return dice_sum; }
-    public int get_count() { return dice_count; }
-    public int[] get_values() {return dice_values; }
 
     public void roll() { 
         for (int i = 0; i < dice_values.length; i++) {
@@ -28,6 +26,11 @@ public class Dice {
             dice_values[i] = rng.nextInt(6) +1;
         }
     }
+
+    // Accessors
+    public int get_sum() { return dice_sum; }
+    public int get_count() { return dice_count; }
+    public int[] get_values() {return dice_values; }
 
     public String[] get_dice_str() {
         String[] dice_str = new String[5];

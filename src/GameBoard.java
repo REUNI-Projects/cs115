@@ -5,11 +5,13 @@ public class GameBoard {
     private int level;
     private int turn;
 
+    // Constructor
     public GameBoard(int level) { 
         this.level = level; 
         set_board();
     }
 
+    // Methods
     private void set_board() {
         for (int i = 0; i < (level + 1) * 6; i++) {
             board[i] = i + 1;
@@ -36,6 +38,7 @@ public class GameBoard {
         turn += 1;
     }
 
+    // Accessors
     public int[] get_board() { return board; }
     public int get_score() { return score; }
     public int get_level() { return level; }
