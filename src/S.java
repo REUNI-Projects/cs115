@@ -1,11 +1,10 @@
 public class S {
     enum Screen {
+        off,
         main_menu,
         level_menu,
         in_game,
-        in_game_alt,
-        end_win,
-        end_lose,
+        end,
         leader_board_1,
         leader_board_2,
         leader_board_3,
@@ -14,12 +13,13 @@ public class S {
         info_3,
         info_4,
         info_5,
-        info_6
+        info_6,
+        err404
     }
     enum Error { // not longer then 64char
         //         "----------------------------------------------------------------"
         // STB Game Loop Errors
-        Err001("ERR 001: ???\n"),
+        Err001("ERR 001: invalid input detected...\n"),
 
         // Component Errors
             // Dice Errors
@@ -53,6 +53,7 @@ public class S {
         public String get_msg() { return msg; }
     }
     enum Level {
+        L_("{-?-} Err", -1),
         L0("{-0-} Easy", 0),
         L1("{-1-} Normal (OG)", 1),
         L2("{-2-} Hard", 2),
@@ -68,5 +69,16 @@ public class S {
         }
         public String get_name() { return name; }
         public int get_num() { return num; }
+    }
+    public static Level get_lv(int lv) {
+        switch (lv) {
+            case 0: return Level.L0;
+            case 1: return Level.L1;
+            case 2: return Level.L2;
+            case 3: return Level.L3;
+            case 4: return Level.L4;
+            case 5: return Level.L5;
+            default: return Level.L_;
+        }
     }
 }

@@ -12,11 +12,11 @@ public class Screen {
     private static String screen_bottom = "" + screen_blank +
         "+----------------------------------------------------------------+\n";
     private static String screen_back = "" +
-        "|   [<] Back                 [e] Exit                 [>] Next   |\n";
+        "|   [<] Back                 [e] Exit                            |\n";
     private static String screen_back_next = "" +
         "|   [<] Back                 [e] Exit                 [>] Next   |\n";
     private static String screen_next = "" +
-        "|   [<] Back                 [e] Exit                 [>] Next   |\n";
+        "|                            [e] Exit                 [>] Next   |\n";
 
     // Different Screens -------------------------------------------------------------------------
 

@@ -14,7 +14,11 @@ public class Dice {
         set_level(level.get_num());
         rng = new Random(); 
     }
-    public Dice(int dice_count, int seed) { set_dice_count(dice_count); rng = new Random(seed); }
+    public Dice(int dice_count, S.Level level, int seed) { 
+        set_dice_count(dice_count); 
+        set_level(level.get_num());
+        rng = new Random(seed); 
+    }
 
     // 
     public void set_dice_count(int count) { dice_count = count; }
