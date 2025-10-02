@@ -25,9 +25,11 @@ public class Dice {
     private void set_level(int lv) { level = lv; }
 
     public void roll() { 
+        dice_sum = 0;
         for (int i = 0; i < dice_values.length; i++) {
-            if (i > dice_count - 1) { dice_values[i] = 0; }
             dice_values[i] = rng.nextInt(6) +1;
+            if (i > dice_count - 1) { dice_values[i] = 0; }
+            dice_sum += dice_values[i];
         }
     }
 
@@ -37,7 +39,7 @@ public class Dice {
     public int[] get_values() {return dice_values; }
 
     public String[] get_dice_str() {
-        String[] dice_str = new String[5];
+        String[] dice_str = { "", "", "", "", "" };
         dice_str[0] = "+ Dice:    " + Screen.oo_format.format(dice_sum) + " +";
 
         for (int i = 0; i < dice_values.length; i++) {
@@ -46,12 +48,12 @@ public class Dice {
             if (i < dice_count) {
                 dice_str[i/3 + 1] += "[" + dice_values[i] + "] ";
             } else if (i < level + 1) {
-                dice_str[i/3 + 1] += "[X]";
+                dice_str[i/3 + 1] += "[X] ";
             } else {
-                dice_str[i/3 + 1] += "[_]";
+                dice_str[i/3 + 1] += "[_] ";
             }
 
-            if ((i + 1) % 3 == 0) { dice_str[i%2] += "|"; }
+            if ((i + 1) % 3 == 0) { dice_str[(i%2)+1] += "|"; }
         }
 
         dice_str[3] = "|             |";

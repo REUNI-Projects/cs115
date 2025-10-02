@@ -23,7 +23,7 @@ public class STB {
     // Game
     public void start() {
         System.out.println("Loading STB+ ...");
-
+        err_msg += LeaderBoard.load_leader_board();
         
         // Game Loop
         do {
@@ -47,12 +47,13 @@ public class STB {
                             if (use_seed) { 
                                 dice = new Dice(lv + 1, S.get_lv(lv), seed); 
                             } else { dice = new Dice(lv + 1, S.get_lv(lv)); }
+                            dice.roll();
                             options.generate_options(game_board, dice);
 
                             cur_screen = S.Screen.in_game;
                         } else { err_msg += S.Error.Err001.get_msg(); }
 
-                    } else if (input == "e") { cur_screen = S.Screen.main_menu; } 
+                    } else if (input.equals("e")) { cur_screen = S.Screen.main_menu; } 
                     else { err_msg += S.Error.Err001.get_msg(); }
                     break;
                 case in_game:
@@ -61,8 +62,9 @@ public class STB {
 
                     break;
                 case end:
-                    System.out.print(Screen.end(game_board, err_msg));
-                    turn_reset();
+                    System.out.print(Screen.end(game_board, err_msg)); turn_reset();
+
+
                     break;
                 case leader_board_1:
                     System.out.print(Screen.leader_board(1, err_msg)); turn_reset();
@@ -84,7 +86,7 @@ public class STB {
                 case leader_board_3:
                     System.out.print(Screen.leader_board(3, err_msg)); turn_reset();
                     switch (input) {
-                        case "<": cur_screen = S.Screen.leader_board_1; break;
+                        case "<": cur_screen = S.Screen.leader_board_2; break;
                         case "e": cur_screen = S.Screen.main_menu; break;
                         default: err_msg += S.Error.Err001.get_msg(); break;
                     }

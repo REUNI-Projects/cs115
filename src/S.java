@@ -18,32 +18,35 @@ public class S {
     }
     enum Error { // not longer then 64char
         //         "----------------------------------------------------------------"
-        // STB Game Loop Errors
-        Err001("ERR 001: invalid input detected...\n"),
+        // User input (external)
+        Err001("ERR 001: input, not a listed option\n"),
+        Err002("ERR 002: input, invalid dice amount\n"),
+        Err003("ERR 003: input, Alt Ans provided was unavailable\n"),
+        Err004("ERR 004: input, name needs to be 3 characters\n"),
 
-        // Component Errors
-            // Dice Errors
-        Err101("ERR 101: ???\n"),
+        // File IO Errors
+        Err051("ERR 051: data, failed to read\n"),
+        Err052("ERR 051: data, failed to update\n"),
 
-            // Game Board Errors
-        Err201("ERR 201: ???\n"),
+        // Dice Errors
+        Err101("ERR 101: dice, impossible face value\n"),
+        Err102("ERR 102: dice, too many dice\n"),
 
-            // Options Errors
-        Err301("ERR 301: ???\n"),
+        // Game Board Errors
+        Err151("ERR 151: game board, impossible score value\n"),
+        Err152("ERR 152: game board, impossible turn value\n"),
+        Err153("ERR 153: game board, impossible level value\n"),
+        Err154("ERR 154: game board, invalid game board\n"),
+
+        // Options Errors
+        Err201("ERR 201: options, text overflow\n"),
+        Err202("ERR 202: options, generator overheated\n"),
+
+        // Game Loop Errors
+        Err251("ERR 251: loop, game should have ended\n"),
 
         // Screen Errors
-        Err401("ERR 401: impossible score detected...\n"),
-        Err402("ERR 402: impossible level detected...\n"),
-        Err403("ERR 403: impossible game board detected...\n"),
-
         Err404("ERR 404: page not found...\n"),
-
-        Err405("ERR 405: options generation worked too hard...\n"),
-        Err406("ERR 406: game should have ended...\n"),
-        Err407("ERR 407: impossible dice face detected...\n"),
-        Err408("ERR 408: option text overflow detected...\n"),
-        Err409("ERR 409: too many dice detected...\n"),
-        Err410("ERR 410: non-positive turn count detected...\n"),
 
         // Testing Errors
         Err501("ERR 501: ???\n");

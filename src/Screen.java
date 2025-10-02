@@ -68,7 +68,7 @@ public class Screen {
         // Screen
         String screen = screen_top + 
             "|                     >> Level Selection <<                      |\n" + screen_blank;
-        for (int i = 0; i < S.Level.values().length; i++) {
+        for (int i = 1; i < S.Level.values().length; i++) {
             screen += "|   [" + i + "] " + S.Level.values()[i].get_name() + 
             screen_blank.substring(8 + S.Level.values()[i].get_name().length());
         }
@@ -107,21 +107,21 @@ public class Screen {
         int score = board.get_score();
         int level = board.get_level();
 
-        if (score < 0 ) { msg += S.Error.Err401.get_msg(); }
-        if (level < 0 || level > 5) { msg += S.Error.Err402.get_msg(); }
-        if (dice.get_count() > level + 1) { msg += S.Error.Err409.get_msg(); }  
-        if (options.get_options().size() > 13) { msg += S.Error.Err405.get_msg(); } 
-        if (options.get_options().size() < 1) { msg += S.Error.Err406.get_msg(); } 
+        if (score < 0 ) { msg += S.Error.Err151.get_msg(); }
+        if (level < 0 || level > 5) { msg += S.Error.Err153.get_msg(); }
+        if (dice.get_count() > level + 1) { msg += S.Error.Err102.get_msg(); }  
+        if (options.get_options().size() > 13) { msg += S.Error.Err202.get_msg(); } 
+        if (options.get_options().size() < 1) { msg += S.Error.Err251.get_msg(); } 
 
         // Screen
         String screen = screen_top + "|   " + board.get_board_str()[0] + "    " + 
             dice.get_dice_str()[0] + "   |\n" + "|   " + board.get_board_str()[1] + 
             "    " + dice.get_dice_str()[1] + "   |\n" + "|   " + board.get_board_str()[2] + 
             "    " + dice.get_dice_str()[2] + "   |\n" + "|   " + board.get_board_str()[3] + 
-            "    " + dice.get_dice_str()[3] + "   |\n" + board.get_board_str()[4] + 
+            "    " + dice.get_dice_str()[3] + "   |\n" + "|   " + board.get_board_str()[4] + 
             "    " + dice.get_dice_str()[4] + "   |\n" + screen_blank;
 
-        for (int i = 0; i < 12; i += 2) {
+        for (int i = 1; i < 12; i += 2) {
             screen += "|   " + options.get_option_string(i) + "  " + 
                 options.get_option_string(i+1) + "   |\n";
         }
@@ -164,9 +164,9 @@ public class Screen {
         int level = board.get_level();
         int turn = board.get_turn();
 
-        if (score < 0) { msg += S.Error.Err401.get_msg(); }
-        if (turn < 1) { msg += S.Error.Err410.get_msg(); }
-        if (level < 0 || level > 5) { msg += S.Error.Err402.get_msg(); }
+        if (score < 0) { msg += S.Error.Err151.get_msg(); }
+        if (turn < 1) { msg += S.Error.Err152.get_msg(); }
+        if (level < 0 || level > 5) { msg += S.Error.Err153.get_msg(); }
 
         // Screen
         String screen = screen_top;
