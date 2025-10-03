@@ -47,19 +47,19 @@ public class Options {
     public String get_option_string(int i) { 
         // "[  ] 01 02 03 04 05 06 07 .."
         String slot = "                            ";
-        if (i > 0 && i < options.size()) { 
+        if (i > 0 && i <= options.size() && i < 13) { 
             String option = "[" + Screen.oo_format.format(i) + "]";
 
-            if (options.get(i).size() > 8) {
+            if (options.get(i-1).size() > 8) { // > 8 tiles
                 for (int o = 0; o < 7; o++) {
-                    option += " " + Screen.oo_format.format(options.get(i).get(o));
+                    option += " " + Screen.oo_format.format(options.get(i-1).get(o));
                 }
                 option += " ..";
-            } else {
-                for (int o = 0; o < options.get(i).size(); o++) {
-                    option += " " + Screen.oo_format.format(options.get(i).get(o));
-                    option += slot.substring(option.length());
+            } else { // < 8 tiles
+                for (int o = 0; o < options.get(i-1).size(); o++) {
+                    option += " " + Screen.oo_format.format(options.get(i-1).get(o));
                 }
+                option += slot.substring(option.length());
             }
 
             return option; 

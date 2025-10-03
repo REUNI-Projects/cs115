@@ -122,8 +122,8 @@ public class Screen {
             "    " + dice.get_dice_str()[4] + "   |\n" + screen_blank;
 
         for (int i = 1; i < 12; i += 2) {
-            screen += "|   " + options.get_option_string(i) + "  " + 
-                options.get_option_string(i+1) + "   |\n";
+            screen += "|   " + options.get_option_string(i) + " " + 
+                options.get_option_string(i+1) + "    |\n";
         }
 
         screen += screen_blank;
