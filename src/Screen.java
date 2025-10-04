@@ -4,6 +4,8 @@ public class Screen {
     static DecimalFormat ooo_format = new DecimalFormat("000");
     static DecimalFormat oo_format = new DecimalFormat("00");
 
+    static String user = "";
+
     //
     private static String screen_blank = "" +
         "|                                                                |\n";
@@ -38,7 +40,7 @@ public class Screen {
             "|   [e] Exit                                                     |\n" + 
             screen_blank + screen_blank + screen_blank + 
             "|                                                  by 7cevage    |\n" +
-            screen_bottom + msg + "> ";
+            screen_bottom + msg + user + "> ";
         return screen;
     }
 /*                                  ><
@@ -75,7 +77,7 @@ public class Screen {
         screen += screen_blank +
             "|   [e] Exit                                                     |\n" + 
             screen_blank + screen_blank + screen_blank + screen_blank +
-            screen_bottom + msg + "> ";
+            screen_bottom + msg + user + "> ";
         return screen;
     }
 /*                                  ><
@@ -132,7 +134,7 @@ public class Screen {
         } else {
             screen += "|                                                     [e] Exit   |\n";
         }
-        screen += screen_bottom + msg + "> ";
+        screen += screen_bottom + msg + user + "> ";
 
         return screen;
     }
@@ -187,7 +189,7 @@ public class Screen {
             screen_blank + 
             "|   [e] No thanks, Exit                                          |\n" + 
             screen_blank + screen_blank + screen_blank + screen_blank + screen_blank + 
-            screen_bottom + msg + "> ";
+            screen_bottom + msg + user + "> ";
         return screen;
     }
 /*                                  ><
@@ -230,7 +232,7 @@ public class Screen {
         else if (page == 2) { screen += screen_back_next; }
         else { screen += screen_back; }
 
-        screen += screen_bottom + msg + "> ";
+        screen += screen_bottom + msg + user + "> ";
         return screen;
     }
 /*                                  ><
@@ -403,7 +405,7 @@ public class Screen {
                 break;
         }
 
-        screen += screen_bottom + msg + "> ";
+        screen += screen_bottom + msg + user + "> ";
         return screen;
     }
 /*                                  ><
