@@ -13,8 +13,6 @@ public class Options {
     public void generate_options(GameBoard board, Dice dice) {
         ArrayList<Integer> cur_board = IntStream.of(board.get_board()).filter(n -> n > 0).boxed()
             .collect(Collectors.toCollection(ArrayList::new));
-
-        System.err.println("testing gen opt helper");
         gen_opt_helper(cur_board, dice.get_sum(), 0, new ArrayList<Integer>());
     }
 
@@ -24,22 +22,17 @@ public class Options {
         if (goal == 0) { options.add(new ArrayList<>(cur_option)); return; } // Valid opt
         if (goal < 0) { return; } // Invalid opt
 
-        int i = idx; // Search till halfway or has 13 options
-        while (cur_board.get(i) <= goal && options.size() < 14) { 
-            cur_option.add(cur_board.get(i));
-            System.err.println("goal: " + goal + " idx: " + idx + " cur: " + cur_option.toString() );
-
-            gen_opt_helper(cur_board, goal - cur_board.get(i), idx + 1, cur_option);
-
-            cur_option.remove(cur_option.size() - 1); i++;
-            System.err.println("options: " + options.toString() );
+        while (idx < cur_board.size() && options.size() < 13) { 
+            cur_option.add(cur_board.get(idx));
+            gen_opt_helper(cur_board, goal - cur_board.get(idx), idx + 1, cur_option);
+            cur_option.remove(cur_option.size() - 1); idx += 1;
         }
     }
 
     // Accessors
     public ArrayList<ArrayList<Integer>> get_options() { return options; }
     public ArrayList<Integer> get_option(int i) { 
-        if (i > 0 && i < options.size()) { 
+        if (i >= 0 && i < options.size()) { 
             return options.get(i); 
         } else { return null; }
     }
@@ -65,4 +58,6 @@ public class Options {
             return option; 
         } else { return "                            "; }
     }
+
+    public void reset() { options.clear(); }
 }

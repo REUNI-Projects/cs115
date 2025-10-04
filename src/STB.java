@@ -41,7 +41,7 @@ public class STB {
                 case level_menu:
                     System.out.print(Screen.level_menu(err_msg)); turn_reset();
                     if (is_int(input)) {
-                        int lv = Integer.parseInt(input);
+                        int lv = Integer.parseInt(input) - 1;
                         if (lv >= 0 && lv <= 5) {
                             game_board = new GameBoard(lv);
                             if (use_seed) { 
@@ -58,12 +58,49 @@ public class STB {
                     break;
                 case in_game:
                     System.out.print(Screen.in_game(game_board, dice, options, err_msg));
+                    if (options.get_options().size() < 1 || game_board.get_score() == 0) { // GG
+                        cur_screen = S.Screen.end;
+                        System.out.println("");
+                        break;
+                    }
                     turn_reset();
+
+                    if (input.equals("e")) { 
+                        cur_screen = S.Screen.main_menu; 
+                        options.reset();
+                    }
+                    else if (input.contains("x ") && options.get_options().size() > 12) {
+                        // Parse Alt Ans
+
+                        
+                        update(null); // Update board
+                    } else {
+                        switch (input) {
+                            case "01": pick_opt(0); break;
+                            case "02": pick_opt(1); break;
+                            case "03": pick_opt(2); break;
+                            case "04": pick_opt(3); break;
+                            case "05": pick_opt(4); break;
+                            case "06": pick_opt(5); break;
+                            case "07": pick_opt(6); break;
+                            case "08": pick_opt(7); break;
+                            case "09": pick_opt(8); break;
+                            case "10": pick_opt(9); break;
+                            case "11": pick_opt(10); break;
+                            case "12": pick_opt(11); break;
+                            default: err_msg += S.Error.Err001.get_msg(); break;
+                        }
+                    }
 
                     break;
                 case end:
                     System.out.print(Screen.end(game_board, err_msg)); turn_reset();
-
+                    if (input.equals("e")) { cur_screen = S.Screen.main_menu; break; }
+                    else if (input.length() == 3) {
+                        LeaderBoard.update_leader_board(input, game_board.get_score(), 
+                            game_board.get_turn(), S.get_lv(game_board.get_level()));
+                        cur_screen = S.Screen.main_menu; break;
+                    } else { err_msg += S.Error.Err004.get_msg(); }
 
                     break;
                 case leader_board_1:
@@ -157,12 +194,26 @@ public class STB {
     // Helpers
     private void turn_reset() { err_msg = ""; input = scan.nextLine();}
 
-    static boolean is_int(String str) {
+    private boolean is_int(String str) {
         try {
             Integer.parseInt(str);
             return true;
         } catch (NumberFormatException err) {
             return false;
         }
+    }
+
+    private void pick_opt(int opt_idx) {
+        if (opt_idx < options.get_options().size()) {
+            int[] closing_tiles = options.get_option(opt_idx).stream().mapToInt(Integer::intValue).toArray();
+            update(closing_tiles);
+        } else { err_msg += S.Error.Err001.get_msg(); }
+    }
+
+    private void update(int[] close) {
+        game_board.update_board(close);
+        options.reset();
+        dice.roll();
+        options.generate_options(game_board, dice);
     }
 }

@@ -57,7 +57,7 @@ public class Screen {
     |                                                                | 
     |                                                                | 
     |                                                                | 
-    |                                                  by 7cevage    |
+    |                                                   by 7cevage   |
     |                                                                |
     +----------------------------------------------------------------+
  */
@@ -111,7 +111,7 @@ public class Screen {
         if (level < 0 || level > 5) { msg += S.Error.Err153.get_msg(); }
         if (dice.get_count() > level + 1) { msg += S.Error.Err102.get_msg(); }  
         if (options.get_options().size() > 13) { msg += S.Error.Err202.get_msg(); } 
-        if (options.get_options().size() < 1) { msg += S.Error.Err251.get_msg(); } 
+        if (options.get_options().size() < 1 || score == 0) { msg += S.Error.Err251.get_msg(); } 
 
         // Screen
         String screen = screen_top + "|   " + board.get_board_str()[0] + "    " + 
@@ -128,9 +128,9 @@ public class Screen {
 
         screen += screen_blank;
         if (options.get_options().size() > 12) {
-            screen += "|    [x ~] Alt Ans                                   [e] Exit    |\n";
+            screen += "|   [x ~] Alt Ans                                     [e] Exit   |\n";
         } else {
-            screen += "|                                                    [e] Exit    |\n";
+            screen += "|                                                     [e] Exit   |\n";
         }
         screen += screen_bottom + msg + "> ";
 
@@ -176,8 +176,8 @@ public class Screen {
         } else {
             screen += "|                        >> Game Over! <<                        |\n";
         }
-        screen += screen_blank + "|   Difficulty: " + S.Level.values()[level].get_name() + 
-            screen_blank.substring(16 + S.Level.values()[level].get_name().length(), 40);
+        screen += screen_blank + "|   Difficulty: " + S.Level.values()[level+1].get_name() + 
+            screen_blank.substring(16 + S.Level.values()[level+1].get_name().length(), 40);
 
         screen += "Score: " + ooo_format.format(score) + " | Turns: " + oo_format.format(turn) + 
             "   |\n" + screen_blank + 
